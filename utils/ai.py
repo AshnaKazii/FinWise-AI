@@ -1,22 +1,31 @@
+
 import os
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
 
-API_KEY = os.getenv("OPENROUTER_API_KEY")
-MODEL = os.getenv("MODEL_NAME", "openai/gpt-oss-20b")
+# Support both local development (.env) and Streamlit Cloud (Secrets)
+try:
+    import streamlit as st
+
+    API_KEY = st.secrets["OPENROUTER_API_KEY"]
+    MODEL = st.secrets.get("MODEL_NAME", "openai/gpt-oss-20b")
+
+except Exception:
+    API_KEY = os.getenv("OPENROUTER_API_KEY")
+    MODEL = os.getenv("MODEL_NAME", "openai/gpt-oss-20b")
 
 
 def ask_ai(question):
 
     if not API_KEY:
-        return "❌ OpenRouter API key not found. Add it to your .env file."
+        return "❌ OpenRouter API key not found. Add it to Streamlit Secrets or your .env file."
 
     headers = {
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json",
-        "HTTP-Referer": "http://localhost:8501",
+        "HTTP-Referer": "https://finwise-financial-assistant.streamlit.app",
         "X-Title": "FinWise AI"
     }
 
@@ -40,7 +49,6 @@ def ask_ai(question):
     }
 
     try:
-
         response = requests.post(
             "https://openrouter.ai/api/v1/chat/completions",
             headers=headers,
@@ -56,3 +64,4 @@ def ask_ai(question):
 
     except Exception as e:
         return f"❌ API Error: {str(e)}"
+
