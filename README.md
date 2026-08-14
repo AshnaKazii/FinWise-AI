@@ -65,7 +65,7 @@ AI Response
 
 🌐 **Live Demo:** https://finwise-financial-assistant.streamlit.app/
 
-
+```
 ## 🚀 Run Locally
 
 ```bash
@@ -75,7 +75,7 @@ pip install -r requirements.txt
 streamlit run app.py
 
 ---
-
+```
 ## 👩‍💻 Author
 
 **Ashna Kazi**
