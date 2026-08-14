@@ -65,7 +65,7 @@ AI Response
 
 🌐 **Live Demo:** https://finwise-financial-assistant.streamlit.app/
 
-```
+
 ## 🚀 Run Locally
 
 ```bash
